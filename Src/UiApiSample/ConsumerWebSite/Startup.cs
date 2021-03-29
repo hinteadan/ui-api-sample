@@ -2,11 +2,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace ConsumerWebSite
 {
@@ -28,12 +26,25 @@ namespace ConsumerWebSite
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapGet("/", async context =>
+            //    {
+            //        await context.Response.WriteAsync("Hello World!");
+            //    });
+            //});
+
+            app.UseDefaultFiles(new DefaultFilesOptions
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Content")),
+                RequestPath = string.Empty,
+            });
+
+            app
+            .UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Content")),
+                RequestPath = string.Empty,
             });
         }
     }

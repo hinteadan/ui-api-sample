@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Consumer Web App</title>
+
+    <script src="http://localhost:58881/jsapi/finClusiveJsApi.js"></script>
+
+</head>
+<body>
+    This is the Web App that consumes FinClusive's JavaScript UI API
+
+    <div id="FinClusiveUI"></div>
+
+    <script>
+        window.FinClusive.render(document.getElementById('FinClusiveUI'), '26E7A0D3-FB05-4345-AC42-1836A888F1A1');
+        //window.FinClusive.render(document.getElementById('FinClusiveUI'), 'SomeRandomInvalidApiKey');
+    </script>
+</body>
+</html>
