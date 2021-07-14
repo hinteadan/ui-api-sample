@@ -6,14 +6,85 @@
 
     <script src="http://localhost:58881/jsapi/finClusiveJsApi.js"></script>
 
+    <style>
+        label{
+            display: block;
+            margin: 10px;
+        }
+    </style>
+
 </head>
 <body>
-    This is the Web App that consumes FinClusive's JavaScript UI API
+    <!--This is the Web App that consumes FinClusive's JavaScript UI API-->
 
-    <div id="FinClusiveUI"></div>
+    <h4>IFrame Sample</h4>
+
+    <div id="FinClusiveUI">
+        <form action="http://localhost:56602/iframe/client/individual/form" method="post">
+            <input type="hidden" name="x-finclusive-apikey" value="A86478AB-5607-4430-8BE5-A65B4246DEDF" />
+
+            <label>
+                First Name
+                <input type="text" name="FirstName" />
+            </label>
+
+            <label>
+                Last Name
+                <input type="text" name="LastName" />
+            </label>
+
+            <label>
+                Email Address
+                <input type="text" name="EmailAddress" />
+            </label>
+
+            <label>
+                Phone Number
+                <input type="text" name="PhoneNumber" />
+            </label>
+
+            <label>
+                Tax Id Number
+                <input type="text" name="TaxIdNumber" />
+            </label>
+
+            <label>
+                Street Address
+                <input type="text" name="Address.Address1" />
+            </label>
+
+            <label>
+                Street Address Notes
+                <input type="text" name="Address.Address2" />
+            </label>
+
+            <label>
+                City
+                <input type="text" name="Address.City" />
+            </label>
+
+            <label>
+                State
+                <input type="text" name="Address.State" />
+            </label>
+
+            <label>
+                Postal Code
+                <input type="text" name="Address.PostalCode" />
+            </label>
+
+            <label>
+                ISO Country Code
+                <input type="text" name="Address.IsoCountryCode" />
+            </label>
+
+            <button type="submit">Create Individual Client</button>
+
+        </form>
+    </div>
 
     <script>
-        window.FinClusive.render(document.getElementById('FinClusiveUI'), '26E7A0D3-FB05-4345-AC42-1836A888F1A1');
+        //window.FinClusive.render(document.getElementById('FinClusiveUI'), '26E7A0D3-FB05-4345-AC42-1836A888F1A1');
         //window.FinClusive.render(document.getElementById('FinClusiveUI'), 'SomeRandomInvalidApiKey');
     </script>
 </body>
