@@ -20,7 +20,8 @@
     <h4>IFrame Sample</h4>
 
     <div id="FinClusiveUI">
-        <form action="http://localhost:56602/iframe/client/individual/form" method="post">
+        <!--<form action="http://localhost:56602/iframe/client/individual/form" method="post">
+
             <input type="hidden" name="x-finclusive-apikey" value="A86478AB-5607-4430-8BE5-A65B4246DEDF" />
 
             <label>
@@ -80,7 +81,138 @@
 
             <button type="submit">Create Individual Client</button>
 
+        </form>-->
+
+
+        <form action="http://localhost:56602/iframe/client/entity/form" method="post">
+
+            <input type="hidden" name="x-finclusive-apikey" value="A86478AB-5607-4430-8BE5-A65B4246DEDF" />
+
+            <label>
+                Legal Name
+                <input type="text" name="LegalName" />
+            </label>
+
+            <label>
+                Phone Number
+                <input type="text" name="PhoneNumber" />
+            </label>
+
+            <label>
+                Tax Id Number
+                <input type="text" name="TaxIdNumber" />
+            </label>
+
+            <label>
+                BVN
+                <input type="text" name="BVN" />
+            </label>
+
+            <label>
+                Street Address
+                <input type="text" name="CompanyAddress.Address1" />
+            </label>
+
+            <label>
+                Street Address Notes
+                <input type="text" name="CompanyAddress.Address2" />
+            </label>
+
+            <label>
+                City
+                <input type="text" name="CompanyAddress.City" />
+            </label>
+
+            <label>
+                State
+                <input type="text" name="CompanyAddress.State" />
+            </label>
+
+            <label>
+                Postal Code
+                <input type="text" name="CompanyAddress.PostalCode" />
+            </label>
+
+            <label>
+                ISO Country Code
+                <input type="text" name="CompanyAddress.IsoCountryCode" />
+            </label>
+
+            <fieldset>
+
+                <legend>Control Person</legend>
+
+                <label>
+                    First Name
+                    <input type="text" name="ControlPersons[0].FirstName" />
+                </label>
+
+                <label>
+                    Last Name
+                    <input type="text" name="ControlPersons[0].LastName" />
+                </label>
+
+                <label>
+                    Title
+                    <input type="text" name="ControlPersons[0].Title" value="Director" />
+                </label>
+
+                <label>
+                    Email
+                    <input type="text" name="ControlPersons[0].EmailAddress" />
+                </label>
+
+                <label>
+                    Phone
+                    <input type="text" name="ControlPersons[0].PhoneNumber" />
+                </label>
+
+                <label>
+                    Tax ID
+                    <input type="text" name="ControlPersons[0].TaxIdNumber" />
+                </label>
+
+                <label>
+                    BVN
+                    <input type="text" name="ControlPersons[0].BVN" />
+                </label>
+
+                <label>
+                    Street Address
+                    <input type="text" name="ControlPersons[0].Address.Address1" />
+                </label>
+
+                <label>
+                    Street Address Notes
+                    <input type="text" name="ControlPersons[0].Address.Address2" />
+                </label>
+
+                <label>
+                    City
+                    <input type="text" name="ControlPersons[0].Address.City" />
+                </label>
+
+                <label>
+                    State
+                    <input type="text" name="ControlPersons[0].Address.State" />
+                </label>
+
+                <label>
+                    Postal Code
+                    <input type="text" name="ControlPersons[0].Address.PostalCode" />
+                </label>
+
+                <label>
+                    ISO Country Code
+                    <input type="text" name="ControlPersons[0].Address.IsoCountryCode" />
+                </label>
+
+            </fieldset>
+
+            <button type="submit">Create Entity Client</button>
+
         </form>
+
     </div>
 
     <script>
