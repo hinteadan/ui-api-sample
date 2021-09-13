@@ -7,7 +7,7 @@
     <script src="http://localhost:58881/jsapi/finClusiveJsApi.js"></script>
 
     <style>
-        label{
+        label {
             display: block;
             margin: 10px;
         }
@@ -209,6 +209,18 @@
 
             </fieldset>
 
+            <fieldset>
+                <legend>Docs</legend>
+
+                <label>
+                    IncorporationDocument
+                    <input type="file" name="IncorporationDocumentFile" onchange="updateIncorporationDocument()" id="IncorporationDocumentFile" />
+                    <input type="hidden" name="IncorporationDocument.Content" id="IncorporationDocumentContent" />
+                    <input type="hidden" name="IncorporationDocument.FileName" id="IncorporationDocumentFileName" />
+                </label>
+
+            </fieldset>
+
             <button type="submit">Create Entity Client</button>
 
         </form>
@@ -218,6 +230,32 @@
     <script>
         //window.FinClusive.render(document.getElementById('FinClusiveUI'), '26E7A0D3-FB05-4345-AC42-1836A888F1A1');
         //window.FinClusive.render(document.getElementById('FinClusiveUI'), 'SomeRandomInvalidApiKey');
+        function getBase64(file, onResult) {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                console.log(reader.result);
+                if (onResult) onResult(reader.result);
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
+        }
+
+        function updateIncorporationDocument() {
+            var incorporationDocumentContent = document.getElementById("IncorporationDocumentContent");
+            var incorporationDocumentFileName = document.getElementById("IncorporationDocumentFileName");
+            try {
+                var file = document.getElementById("IncorporationDocumentFile").files[0];
+                getBase64(file, x => incorporationDocumentContent.value = x);
+                incorporationDocumentFileName.value = file.name;
+            }
+            catch (err) {
+                incorporationDocumentContent.value = '';
+                incorporationDocumentFileName.value = '';
+            }
+        }
+
     </script>
 </body>
 </html>
