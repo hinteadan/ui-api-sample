@@ -17,11 +17,74 @@
 <body>
     <!--This is the Web App that consumes FinClusive's JavaScript UI API-->
 
-    <h4>IFrame Sample - Add Entity Client</h4>
+    <h4>IFrame Sample - Add Individual Client</h4>
 
     <div id="FinClusiveUI">
+        <form action="http://localhost:56602/iframe/client/individual/form" method="post">
 
-        <form action="http://localhost:56602/iframe/client/entity/form" method="post">
+            <input type="hidden" name="x-finclusive-apikey" value="A86478AB-5607-4430-8BE5-A65B4246DEDF" />
+
+            <label>
+                First Name
+                <input type="text" name="FirstName" />
+            </label>
+
+            <label>
+                Last Name
+                <input type="text" name="LastName" />
+            </label>
+
+            <label>
+                Email Address
+                <input type="text" name="EmailAddress" />
+            </label>
+
+            <label>
+                Phone Number
+                <input type="text" name="PhoneNumber" />
+            </label>
+
+            <label>
+                Tax Id Number
+                <input type="text" name="TaxIdNumber" />
+            </label>
+
+            <label>
+                Street Address
+                <input type="text" name="Address.Address1" />
+            </label>
+
+            <label>
+                Street Address Notes
+                <input type="text" name="Address.Address2" />
+            </label>
+
+            <label>
+                City
+                <input type="text" name="Address.City" />
+            </label>
+
+            <label>
+                State
+                <input type="text" name="Address.State" />
+            </label>
+
+            <label>
+                Postal Code
+                <input type="text" name="Address.PostalCode" />
+            </label>
+
+            <label>
+                ISO Country Code
+                <input type="text" name="Address.IsoCountryCode" />
+            </label>
+
+            <button type="submit">Create Individual Client</button>
+
+        </form>
+
+
+        <!--<form action="http://localhost:56602/iframe/client/entity/form" method="post">
 
             <input type="hidden" name="x-finclusive-apikey" value="A86478AB-5607-4430-8BE5-A65B4246DEDF" />
 
@@ -146,53 +209,15 @@
 
             </fieldset>
 
-            <fieldset>
-                <legend>Docs</legend>
-
-                <label>
-                    IncorporationDocument
-                    <input type="file" name="IncorporationDocumentFile" onchange="updateIncorporationDocument()" id="IncorporationDocumentFile" />
-                    <input type="hidden" name="IncorporationDocument.Content" id="IncorporationDocumentContent" />
-                    <input type="hidden" name="IncorporationDocument.FileName" id="IncorporationDocumentFileName" />
-                </label>
-
-            </fieldset>
-
             <button type="submit">Create Entity Client</button>
 
-        </form>
+        </form>-->
 
     </div>
 
     <script>
-        //window.FinClusive.render(document.getElementById('FinClusiveUI'), '26E7A0D3-FB05-4345-AC42-1836A888F1A1');
-        //window.FinClusive.render(document.getElementById('FinClusiveUI'), 'SomeRandomInvalidApiKey');
-        function getBase64(file, onResult) {
-            var reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function () {
-                console.log(reader.result);
-                if (onResult) onResult(reader.result);
-            };
-            reader.onerror = function (error) {
-                console.log('Error: ', error);
-            };
-        }
-
-        function updateIncorporationDocument() {
-            var incorporationDocumentContent = document.getElementById("IncorporationDocumentContent");
-            var incorporationDocumentFileName = document.getElementById("IncorporationDocumentFileName");
-            try {
-                var file = document.getElementById("IncorporationDocumentFile").files[0];
-                getBase64(file, x => incorporationDocumentContent.value = x);
-                incorporationDocumentFileName.value = file.name;
-            }
-            catch (err) {
-                incorporationDocumentContent.value = '';
-                incorporationDocumentFileName.value = '';
-            }
-        }
-
+            //window.FinClusive.render(document.getElementById('FinClusiveUI'), '26E7A0D3-FB05-4345-AC42-1836A888F1A1');
+            //window.FinClusive.render(document.getElementById('FinClusiveUI'), 'SomeRandomInvalidApiKey');
     </script>
 </body>
 </html>
