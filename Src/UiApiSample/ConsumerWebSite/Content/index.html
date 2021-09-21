@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>Consumer Web App</title>
 
-    <script src="http://localhost:58881/jsapi/finClusiveJsApi.js"></script>
+    <!--<script src="http://localhost:58881/jsapi/finClusiveJsApi.js"></script>-->
 
     <style>
         label {
@@ -17,16 +17,16 @@
 <body>
     <!--This is the Web App that consumes FinClusive's JavaScript UI API-->
 
-    <h4>IFrame Sample - Add Entity Client</h4>
+    <h4>WebForm Sample - Add Entity Client</h4>
 
     <div id="FinClusiveUI">
 
-        <form action="http://localhost:56602/iframe/client/entity/form" method="post">
+        <form action="http://localhost:56602/iframe/client/entity/form" method="post" name="FinClusiveEntityForm">
 
             <input type="hidden" name="x-finclusive-apikey" value="A86478AB-5607-4430-8BE5-A65B4246DEDF" />
 
             <label>
-                Legal Name
+                Legal Name *
                 <input type="text" name="LegalName" />
             </label>
 
@@ -46,7 +46,7 @@
             </label>
 
             <label>
-                Street Address
+                Street Address *
                 <input type="text" name="CompanyAddress.Address1" />
             </label>
 
@@ -56,22 +56,22 @@
             </label>
 
             <label>
-                City
+                City *
                 <input type="text" name="CompanyAddress.City" />
             </label>
 
             <label>
-                State
+                State *
                 <input type="text" name="CompanyAddress.State" />
             </label>
 
             <label>
-                Postal Code
+                Postal Code *
                 <input type="text" name="CompanyAddress.PostalCode" />
             </label>
 
             <label>
-                ISO Country Code
+                ISO Country Code *
                 <input type="text" name="CompanyAddress.IsoCountryCode" />
             </label>
 
@@ -80,12 +80,12 @@
                 <legend>Control Person</legend>
 
                 <label>
-                    First Name
+                    First Name *
                     <input type="text" name="ControlPersons[0].FirstName" />
                 </label>
 
                 <label>
-                    Last Name
+                    Last Name *
                     <input type="text" name="ControlPersons[0].LastName" />
                 </label>
 
@@ -115,7 +115,7 @@
                 </label>
 
                 <label>
-                    Street Address
+                    Street Address *
                     <input type="text" name="ControlPersons[0].Address.Address1" />
                 </label>
 
@@ -125,22 +125,22 @@
                 </label>
 
                 <label>
-                    City
+                    City *
                     <input type="text" name="ControlPersons[0].Address.City" />
                 </label>
 
                 <label>
-                    State
+                    State *
                     <input type="text" name="ControlPersons[0].Address.State" />
                 </label>
 
                 <label>
-                    Postal Code
+                    Postal Code *
                     <input type="text" name="ControlPersons[0].Address.PostalCode" />
                 </label>
 
                 <label>
-                    ISO Country Code
+                    ISO Country Code *
                     <input type="text" name="ControlPersons[0].Address.IsoCountryCode" />
                 </label>
 
@@ -150,7 +150,7 @@
                 <legend>Docs</legend>
 
                 <label>
-                    IncorporationDocument
+                    IncorporationDocument *
                     <input type="file" name="IncorporationDocumentFile" onchange="updateIncorporationDocument()" id="IncorporationDocumentFile" />
                     <input type="hidden" name="IncorporationDocument.Content" id="IncorporationDocumentContent" />
                     <input type="hidden" name="IncorporationDocument.FileName" id="IncorporationDocumentFileName" />
@@ -159,15 +159,14 @@
 
             </fieldset>
 
-            <button type="submit">Create Entity Client</button>
+            <button type="submit" id="FinClusiveEntityFormSubmitButton">Create Entity Client</button>
 
         </form>
 
     </div>
 
     <script>
-        //window.FinClusive.render(document.getElementById('FinClusiveUI'), '26E7A0D3-FB05-4345-AC42-1836A888F1A1');
-        //window.FinClusive.render(document.getElementById('FinClusiveUI'), 'SomeRandomInvalidApiKey');
+
         function getBase64(file, onResult) {
             var reader = new FileReader();
             reader.readAsDataURL(file);
@@ -193,6 +192,71 @@
                 incorporationDocumentFileName.value = '';
             }
         }
+
+        async function printResponse(response) {
+            if (!response || !response.body)
+                return '[No Response]';
+
+            const rawResponse = await response.text();
+
+            try {
+                let jsonResponse = JSON.parse(rawResponse);
+
+                if (!Array.isArray(jsonResponse))
+                    return JSON.stringify(jsonResponse, null, '    ');
+
+                if (!jsonResponse.length)
+                    return '[No Response]';
+
+                return jsonResponse.join('\r\n');
+            }
+            catch (err) {
+                return rawResponse;
+            }
+        }
+
+        let isSubmitting = false;
+        document.addEventListener("submit", async (e) => {
+            // Store reference to form to make later code easier to read
+            const form = e.target;
+            const submitButton = document.getElementById("FinClusiveEntityFormSubmitButton");
+
+            if (form.name !== 'FinClusiveEntityForm')
+                return;
+
+            if (isSubmitting)
+                return;
+
+            // Prevent the default form submit
+            e.preventDefault();
+
+            isSubmitting = true;
+            submitButton.disabled = true;
+            document.body.style.cursor = 'wait';
+
+            try {
+                let response = await fetch(form.action, {
+                    method: form.method,
+                    body: new FormData(form),
+                });
+
+                document.body.style.cursor = null;
+                submitButton.disabled = false;
+
+                if (!response.ok) {
+                    alert(await printResponse(response));
+                }
+
+                alert(`Client successfully created!\r\n\r\n${await printResponse(response)}`);
+            }
+            catch (err) {
+                console.error(err);
+            }
+
+            document.body.style.cursor = null;
+            submitButton.disabled = false;
+            isSubmitting = false;
+        });
 
     </script>
 </body>
