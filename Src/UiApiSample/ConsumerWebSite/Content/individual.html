@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Consumer Web App</title>
+
+    <style>
+        label {
+            display: block;
+            margin: 10px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <h4>WebForm Sample - Add Individual Client</h4>
+
+    <div id="FinClusiveUI">
+
+        <form action="http://localhost:56602/iframe/client/individual/form" method="post" name="FinClusiveForm">
+
+            <input type="hidden" name="x-finclusive-apikey" value="A86478AB-5607-4430-8BE5-A65B4246DEDF" />
+
+            <label>
+                First Name *
+                <input type="text" name="FirstName" />
+            </label>
+
+            <label>
+                Last Name *
+                <input type="text" name="LastName" />
+            </label>
+
+            <label>
+                Email Address
+                <input type="text" name="EmailAddress" />
+            </label>
+
+            <label>
+                Phone Number
+                <input type="text" name="PhoneNumber" />
+            </label>
+
+            <label>
+                Tax Id Number
+                <input type="text" name="TaxIdNumber" />
+            </label>
+
+            <label>
+                Street Address *
+                <input type="text" name="Address.Address1" />
+            </label>
+
+            <label>
+                Street Address Notes
+                <input type="text" name="Address.Address2" />
+            </label>
+
+            <label>
+                City *
+                <input type="text" name="Address.City" />
+            </label>
+
+            <label>
+                State *
+                <input type="text" name="Address.State" />
+            </label>
+
+            <label>
+                Postal Code *
+                <input type="text" name="Address.PostalCode" />
+            </label>
+
+            <label>
+                ISO Country Code *
+                <input type="text" name="Address.IsoCountryCode" />
+            </label>
+
+            <button type="submit" id="FinClusiveFormSubmitButton">Create Individual Client</button>
+
+        </form>
+
+    </div>
+
+    <script>
+        async function printResponse(response) {
+            if (!response || !response.body)
+                return '[No Response]';
+
+            const rawResponse = await response.text();
+
+            try {
+                let jsonResponse = JSON.parse(rawResponse);
+
+                if (!Array.isArray(jsonResponse))
+                    return JSON.stringify(jsonResponse, null, '    ');
+
+                if (!jsonResponse.length)
+                    return '[No Response]';
+
+                return jsonResponse.join('\r\n');
+            }
+            catch (err) {
+                return rawResponse;
+            }
+        }
+
+        let isSubmitting = false;
+        document.addEventListener("submit", async (e) => {
+            const form = e.target;
+            const submitButton = document.getElementById("FinClusiveFormSubmitButton");
+
+            if (form.name !== 'FinClusiveForm')
+                return;
+
+            if (isSubmitting)
+                return;
+
+            e.preventDefault();
+
+            isSubmitting = true;
+            submitButton.disabled = true;
+            document.body.style.cursor = 'wait';
+
+            try {
+                let response = await fetch(form.action, {
+                    method: form.method,
+                    body: new FormData(form),
+                });
+
+                document.body.style.cursor = null;
+                submitButton.disabled = false;
+
+                if (!response.ok) {
+                    alert(await printResponse(response));
+                }
+
+                alert(`Client successfully created!\r\n\r\n${await printResponse(response)}`);
+            }
+            catch (err) {
+                console.error(err);
+            }
+
+            document.body.style.cursor = null;
+            submitButton.disabled = false;
+            isSubmitting = false;
+        });
+
+    </script>
+</body>
+</html>
