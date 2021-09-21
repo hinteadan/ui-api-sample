@@ -4,8 +4,6 @@
     <meta charset="utf-8" />
     <title>Consumer Web App</title>
 
-    <!--<script src="http://localhost:58881/jsapi/finClusiveJsApi.js"></script>-->
-
     <style>
         label {
             display: block;
@@ -15,7 +13,6 @@
 
 </head>
 <body>
-    <!--This is the Web App that consumes FinClusive's JavaScript UI API-->
 
     <h4>WebForm Sample - Add Entity Client</h4>
 
@@ -217,7 +214,6 @@
 
         let isSubmitting = false;
         document.addEventListener("submit", async (e) => {
-            // Store reference to form to make later code easier to read
             const form = e.target;
             const submitButton = document.getElementById("FinClusiveEntityFormSubmitButton");
 
@@ -227,7 +223,6 @@
             if (isSubmitting)
                 return;
 
-            // Prevent the default form submit
             e.preventDefault();
 
             isSubmitting = true;
